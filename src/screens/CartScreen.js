@@ -17,7 +17,7 @@ import {
   createSearchParams,
   useLocation,
 } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 
 function CartScreen() {
   const { id } = useParams();
@@ -37,7 +37,7 @@ function CartScreen() {
   }, [dispatch, id, qty]);
 
   const removeFromCartHandler = (id) => {
-    // dispatch(removeFromCart(id))
+    dispatch(removeFromCart(id));
   };
 
   let navigate = useNavigate();
