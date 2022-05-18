@@ -9,7 +9,7 @@ import {
 
 import { cartReducer } from "./reducers/cartReducers";
 
-import { userLoginReducer } from "./reducers/userReducers";
+import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -17,6 +17,7 @@ const reducer = combineReducers({
 
   cart: cartReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 });
 
 const middleware = [thunk];
