@@ -21,7 +21,7 @@ import { addToCart, removeFromCart } from "../actions/cartActions";
 
 function CartScreen() {
   const { id } = useParams();
-  const location = useLocation(); //prevision version used it as a location prop
+  const location = useLocation(); //previous version used it as a location prop
   const qty = location.search ? Number(location.search.split("=")[1]) : 1; //qty stands for quantity
 
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function CartScreen() {
     dispatch(removeFromCart(id));
   };
 
-  let navigate = useNavigate();
+  let navigate = useNavigate(); // previous version used it as a history prop
 
   const checkoutHandler = () => {
     // history.push('/login?redirect=shipping')
