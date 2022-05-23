@@ -40,11 +40,12 @@ function CartScreen() {
     dispatch(removeFromCart(id));
   };
 
-  let navigate = useNavigate(); // previous version used it as a history prop
+  let history = useNavigate(); // previous version used it as a history prop
 
   const checkoutHandler = () => {
     // history.push('/login?redirect=shipping')
-    navigate("/login?redirect=shipping");
+    // history("/login?redirect=shipping");
+    history("/shipping");
   };
 
   return (
