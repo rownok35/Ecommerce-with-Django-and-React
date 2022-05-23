@@ -1,3 +1,4 @@
+# Create virtual environment, then install requirements.txt, Activate the virtual environment. CD Frontend, CD backend then find the manage.py
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
