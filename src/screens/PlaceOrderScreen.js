@@ -4,14 +4,22 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-// import { createOrder } from "../actions/orderActions";
+import { createOrder } from "../actions/orderActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getOrderDetails } from "../actions/orderActions";
 
 function PlaceOrderScreen() {
   let history = useNavigate(); //previous version used it as a history prop
-  //   const orderCreate = useSelector((state) => state.orderCreate);
-  //   const { order, error, success } = orderCreate;
+  const orderId = useParams(); // previous version used it as a match.params.id;
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, error, success } = orderCreate;
+  console.log("orderCreate from placeorderscreen  : ", orderCreate);
+
+  const orderDetails = useSelector((state) => state.orderDetails); //adding extra codes
+  // const { order1, error1, loading1 } = orderDetails;
+  // console.log("order from placeorderscreen : ", order1);
 
   const dispatch = useDispatch();
 
@@ -33,25 +41,27 @@ function PlaceOrderScreen() {
     history("/payment");
   }
 
-  //   useEffect(() => {
-  //     if (success) {
-  //       history(`/order/${order._id}`);
-  //       dispatch({ type: ORDER_CREATE_RESET });
-  //     }
-  //   }, [success, history]);
+  useEffect(() => {
+    if (success) {
+      console.log("order from placeorderscreen in use-effect ", order);
+      console.log("order ID from placeorderscreen in use-effect ", order._id);
+      history(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [success, history, order, orderId]);
 
   const placeOrder = () => {
-    // dispatch(
-    //   createOrder({
-    //     orderItems: cart.cartItems,
-    //     shippingAddress: cart.shippingAddress,
-    //     paymentMethod: cart.paymentMethod,
-    //     itemsPrice: cart.itemsPrice,
-    //     shippingPrice: cart.shippingPrice,
-    //     taxPrice: cart.taxPrice,
-    //     totalPrice: cart.totalPrice,
-    //   })
-    // );
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -153,7 +163,7 @@ function PlaceOrderScreen() {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                {/* {error && <Message variant="danger">{error}</Message>} */}
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
 
               <ListGroup.Item>
@@ -161,7 +171,7 @@ function PlaceOrderScreen() {
                   type="button"
                   className="btn-block"
                   disabled={cart.cartItems === 0}
-                  // onClick={placeOrder}
+                  onClick={placeOrder}
                 >
                   Place Order
                 </Button>

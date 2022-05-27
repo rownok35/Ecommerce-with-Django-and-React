@@ -12,7 +12,6 @@ export const cartReducer = (
 ) => {
   switch (action.type) {
     case CART_ADD_ITEM:
-      console.log("from Cart Reducer");
       const item = action.payload;
       const existItem = state.cartItems.find((x) => x.product === item.product);
 
@@ -35,16 +34,25 @@ export const cartReducer = (
         ...state,
         cartItems: state.cartItems.filter((x) => x.product !== action.payload),
       };
+
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
         shippingAddress: action.payload,
       };
+
     case CART_SAVE_PAYMENT_METHOD:
       return {
         ...state,
         paymentMethod: action.payload,
       };
+
+    case CART_CLEAR_ITEMS:
+      return {
+        ...state,
+        cartItems: [],
+      };
+
     default:
       return state;
   }
