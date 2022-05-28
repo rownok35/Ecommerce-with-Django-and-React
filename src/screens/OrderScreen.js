@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PayPalButton } from "react-paypal-button-v2";
 import Message from "../components/Message";
@@ -14,24 +14,19 @@ import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
 } from "../constants/orderConstants";
+import { useNavigate, useParams } from "react-router-dom";
 
 function OrderScreen() {
-  let history = useNavigate(); //previous version used it as a history prop
-  const orderId = useParams(); // previous version used it as a match.params.id;
-  console.log(
-    "order Id passing from profilescreen or placeorder screen ",
-    orderId
-  );
   const dispatch = useDispatch();
+
+  let history = useNavigate(); //previous version used it as a history prop
+  let orderId = useParams(); // previous version used it as a match.params.id;
+  orderId = orderId.id;
 
   const [sdkReady, setSdkReady] = useState(false);
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
-
-  console.log("order details  : ", orderDetails, order);
-
-  // console.log("order Id from use selector ", order._id);
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;

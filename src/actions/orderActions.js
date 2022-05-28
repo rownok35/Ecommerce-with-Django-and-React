@@ -41,8 +41,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+    console.log("order from createoder in orderAction: ", order);
 
     const { data } = await axios.post(`/api/orders/add/`, order, config);
+
+    console.log("data returns from server ", data);
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -56,6 +59,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     localStorage.removeItem("cartItems");
   } catch (error) {
+    console.log("error in orderaction ", error);
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload:

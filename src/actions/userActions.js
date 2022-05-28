@@ -127,7 +127,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    console.log("testing ", id);
+
     const { data } = await axios.get(`/api/users/${id}/`, config);
 
     dispatch({
