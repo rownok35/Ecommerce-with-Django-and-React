@@ -80,8 +80,8 @@ function OrderScreen() {
   }, [dispatch, order, orderId, successPay, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log("Order Screen orderId ", orderId);
-    console.log("Order Screen paymentResult ", paymentResult);
+    // console.log("Order Screen orderId ", orderId);
+    // console.log("Order Screen paymentResult ", paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
