@@ -7,6 +7,8 @@ import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useNavigate, useLocation } from "react-router-dom";
+import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 function HomeScreen() {
   let history = useNavigate(); //previous version used it as a history prop
@@ -16,7 +18,7 @@ function HomeScreen() {
   // console.log("keyword from homescreen ", keyword);
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { error, loading, products } = productList;
+  const { error, loading, products, page, pages } = productList;
 
   useEffect(() => {
     dispatch(listProducts(keyword));
@@ -24,19 +26,23 @@ function HomeScreen() {
 
   return (
     <div>
-      <h1>Latest Product</h1>
+      {!keyword && <ProductCarousel />}
+      <h1>Latest Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-            </Col>
-          ))}
-        </Row>
+        <div>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+          <Paginate page={page} pages={pages} keyword={keyword} />
+        </div>
       )}
     </div>
   );

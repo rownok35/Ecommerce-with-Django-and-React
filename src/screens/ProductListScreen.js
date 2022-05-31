@@ -4,7 +4,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-// import Paginate from "../components/Paginate";
+import Paginate from "../components/Paginate";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   listProducts,
@@ -42,7 +42,6 @@ function ProductListScreen() {
   let keyword = useLocation().search;
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
-    // dispatch(listProducts());
 
     if (!userInfo.isAdmin) {
       history("/login");
@@ -51,7 +50,7 @@ function ProductListScreen() {
     if (successCreate) {
       history(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts(keyword));
     }
   }, [
     dispatch,
@@ -60,6 +59,7 @@ function ProductListScreen() {
     successDelete,
     successCreate,
     createdProduct,
+    keyword,
   ]);
 
   const deleteHandler = (id) => {
@@ -138,7 +138,7 @@ function ProductListScreen() {
               ))}
             </tbody>
           </Table>
-          {/* <Paginate pages={pages} page={page} isAdmin={true} /> */}
+          <Paginate pages={pages} page={page} isAdmin={true} />
         </div>
       )}
     </div>
