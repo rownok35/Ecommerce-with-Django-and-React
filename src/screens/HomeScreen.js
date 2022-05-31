@@ -6,15 +6,21 @@ import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function HomeScreen() {
+  let history = useNavigate(); //previous version used it as a history prop
+  let keyword = useLocation(); //previous version used it as a location prop location.search
+  keyword = keyword.search;
+
+  // console.log("keyword from homescreen ", keyword);
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { error, loading, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <div>
