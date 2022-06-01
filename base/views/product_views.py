@@ -17,8 +17,10 @@ def getProducts(request):
     if query == None:
         query = ''
 
+    # products = Product.objects.filter(
+    #     name__icontains=query).order_by('-createdAt')
     products = Product.objects.filter(
-        name__icontains=query).order_by('-createdAt')
+        name__icontains=query)
     
     page = request.query_params.get('page')
     paginator = Paginator(products, 4)
